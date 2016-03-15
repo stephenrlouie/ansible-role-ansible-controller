@@ -8,6 +8,8 @@
   with_items:
   - libselinux-python
   - python-netaddr
+  - ipmitool
+  - net-tools
   tags: ansible-controller
 
 - name: Determine if Ansible temp directory exists
