@@ -29,7 +29,12 @@
   always_run: yes
 
 - name: Create download directory
-  file: path={{ download_dir }} state=directory
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0701'
   when: not dd.stat.exists
 
 - include: flannel_download.yml
