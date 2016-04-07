@@ -43,6 +43,9 @@
 - include: kube_download.yml
   when: manage_kube_download
 
+- include: pypy_download.yml
+  when: manage_pypy_download
+
 #TODO add code for downloading other files such
 # as addons, systemd unit files
 # - include: kube_addons_download.yml
