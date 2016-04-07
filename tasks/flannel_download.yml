@@ -22,7 +22,7 @@
 
 - name: Download Flannel tar file
   get_url:
-    url: "https://github.com/coreos/flannel/releases/download/v{{ flannel_version }}/flannel-{{ flannel_version }}-linux-amd64.tar.gz"
+    url: "{{ flannel_release_url }}"  
     dest: "{{ flannel_download_dir }}"
     validate_certs: False
   environment:
