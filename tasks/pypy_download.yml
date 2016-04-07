@@ -17,7 +17,7 @@
 
 - name: Download PyPy tar file
   get_url:
-    url: "https://bitbucket.org/pypy/pypy/downloads/pypy-{{ pypy_version }}-linux64.tar.bz2"
+    url: "{{ pypy_release_url }}"
     dest: "{{ pypy_download_dir }}"
     validate_certs: False
   environment:

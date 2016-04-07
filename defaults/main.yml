@@ -1,5 +1,5 @@
 # Version of Kubernetes binaries.
-kube_version: 1.1.4
+kube_version: 1.2.0
 
 # Version of Flannel binaries.
 flannel_version: 0.5.5
@@ -23,11 +23,32 @@ ansible_temp_dir: /tmp/.ansible/files
 # Base download directory.
 download_dir: /var/www/html/releases
 
+# The URL to download Kubernetes binaries from.
+kube_release_url_base: https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/
+
+#The default url to download the flannel tar from
+flannel_release_url_base: "https://github.com/coreos/flannel/releases/download"
+flannel_release_url: "{{ flannel_release_url_base }}/v{{ flannel_version }}/flannel-{{ flannel_version }}-linux-amd64.tar.gz"
+
+#The default url to download pypy from
+pypy_release_url_base: "https://bitbucket.org/pypy/pypy/downloads"
+pypy_release_url: "{{ pypy_release_url_base }}/pypy-{{ pypy_version }}-linux64.tar.bz2"
+
+
+# List of Kubernetes binaries to download and install.
+kube_binaries:
+  - kube-apiserver
+  - kube-controller-manager
+  - kube-proxy
+  - kube-scheduler
+  - kubectl
+  - kubelet
+
 # Kubernetes base download directory.
-kube_download_dir: "{{ download_dir }}/kubernetes/{{ kube_version }}"
+kube_download_dir: "{{ download_dir }}/kubernetes/v{{ kube_version }}"
 
 # Flannel base download directory.
-flannel_download_dir: "{{ download_dir }}/flannel/{{ flannel_version }}"
+flannel_download_dir: "{{ download_dir }}/flannel/v{{ flannel_version }}"
 
 #PyPy base download directory.
-pypy_download_dir: "{{ download_dir }}/pypy/{{ pypy_version }}"
+pypy_download_dir: "{{ download_dir }}/pypy/v{{ pypy_version }}"
