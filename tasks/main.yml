@@ -28,6 +28,12 @@
   changed_when: false
   always_run: yes
 
+- name: Create apache user
+  user: name=apache state=present  
+
+- name: Create apache group
+  group: name=apache state=present
+
 - name: Create download directory
   file:
     path: "{{ download_dir }}"
