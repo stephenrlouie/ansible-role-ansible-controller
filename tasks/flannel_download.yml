@@ -1,10 +1,4 @@
 ---
-- name: Determine if Flannel download directory exists
-  stat: path={{ flannel_download_dir }}
-  register: fdd
-  changed_when: false
-  always_run: yes
-
 - name: Create Flannel download directory
   file:
     path: "{{ flannel_download_dir }}"
@@ -12,13 +6,6 @@
     owner: apache
     group: apache
     mode: '0701'
-  when: not fdd.stat.exists
-
-- name: Determine if Flannel tar file exists
-  stat: path={{flannel_download_dir }}/flannel-{{ flannel_version }}-linux-amd64.tar.gz
-  register: ft
-  changed_when: false
-  always_run: yes
 
 - name: Download Flannel tar file
   get_url:
@@ -29,7 +16,6 @@
     http_proxy: "{{ http_proxy|default('') }}"
     https_proxy: "{{ https_proxy|default('') }}"
     no_proxy: "{{ no_proxy|default('') }}"
-  when: not ft.stat.exists
 
 - name: Set Flannel tar file permissions
   file:

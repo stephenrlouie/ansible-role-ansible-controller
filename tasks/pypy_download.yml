@@ -1,19 +1,11 @@
 ---
-- name: Determine if PyPy download directory exists
-  stat: path={{ pypy_download_dir }}
-  register: ppdd
-  changed_when: false
-  always_run: yes
-
 - name: Create PyPy download directory
-  file: path={{ pypy_download_dir }} state=directory
-  when: not ppdd.stat.exists
-
-- name: Determine if PyPy tar file exists
-  stat: path={{ pypy_download_dir }}/pypy-{{ pypy_version }}-linux64.tar.bz2
-  register: ppt
-  changed_when: false
-  always_run: yes
+  file:
+    path: "{{ pypy_download_dir }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0701'
 
 - name: Download PyPy tar file
   get_url:
@@ -24,4 +16,11 @@
     http_proxy: "{{ http_proxy|default('') }}"
     https_proxy: "{{ https_proxy|default('') }}"
     no_proxy: "{{ no_proxy|default('') }}"
-  when: not ppt.stat.exists
+
+- name: Set PyPy binary permissions
+  file:
+    path: "{{ pypy_download_dir }}/pypy-{{ pypy_version }}-linux64.tar.bz2"
+    state: file
+    owner: apache
+    group: apache
+    mode: '0701'
