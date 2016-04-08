@@ -12,21 +12,8 @@
   - net-tools
   tags: ansible-controller
 
-- name: Determine if Ansible temp directory exists
-  stat: path={{ ansible_temp_dir }}
-  register: atd
-  changed_when: false
-  always_run: yes
-
 - name: Create Ansible temp directory
   file: path={{ ansible_temp_dir }} state=directory
-  when: not atd.stat.exists
-
-- name: Determine if download directory exists
-  stat: path={{ download_dir }}
-  register: dd
-  changed_when: false
-  always_run: yes
 
 - name: Create apache user
   user: name=apache state=present  
@@ -41,7 +28,6 @@
     owner: apache
     group: apache
     mode: '0701'
-  when: not dd.stat.exists
 
 - include: flannel_download.yml
   when: manage_flannel_download
