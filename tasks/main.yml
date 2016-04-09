@@ -12,15 +12,6 @@
   - net-tools
   tags: ansible-controller
 
-- name: Create Ansible temp directory
-  file: path={{ ansible_temp_dir }} state=directory
-
-- name: Create apache user
-  user: name=apache state=present  
-
-- name: Create apache group
-  group: name=apache state=present
-
 - name: Create download directory
   file:
     path: "{{ download_dir }}"
@@ -28,6 +19,7 @@
     owner: apache
     group: apache
     mode: '0701'
+  notify: restart httpd
 
 - include: flannel_download.yml
   when: manage_flannel_download
